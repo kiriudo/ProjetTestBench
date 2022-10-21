@@ -1,0 +1,7 @@
+<h1>logs for the product {{products.serial_number}}</h1>
+<ul>
+{% for log in products.logs_set.all %}
+    <li><a href="/reworking/{{ log.id_log }}/reworkproduct">{{log}}</a></li>
+{% endfor %}
+</ul>
+

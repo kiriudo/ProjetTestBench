@@ -1,0 +1,82 @@
+<h1>Choisissez un produit</h1>
+    <form action = '/reworking/' method="GET" >
+        {% csrf_token %}
+      <label for="product_id">Enter serial number: </label>
+      <input id="product_id" type="search" name="search" value={{ serial_number }}>
+      <input type="submit" value="OK">
+    </form>
+
+    <a>Serial number : {{ serial_number }}</a><br>
+    <a>Model : {{ model }}</a><br>
+    <a>Elec : {{ elec_result }} </a><br>
+    <a>Functionnal  : {{ functional_result }}</a><br>
+
+<h1>Derniers Reworks</h1>
+    {% if reworks_list %}
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>rework</th>
+                    <th>date</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for R in reworks_list %}
+                    <tr>
+                        <td> {{ R.id }} </td>
+                        <td> {{ R.rework }} </td>
+                        <td> {{ R.date }} </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {%  endif %}
+
+<h1>log du dernier test échoué</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>test</th>
+                <th>result</th>
+                <th>date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ last_log_failed.id_log }}</td>
+                <td>{{ last_log_failed.test }}</td>
+                <td>{{ last_log_failed.result }}</td>
+                <td>{{ last_log_failed.date }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="button" value = "all_logs">
+
+<h1>liste des réparations</h1>
+    <form>
+        <input type="search" name="reworksearch" value="">
+        <input type = "button" value = "search">
+    </form>
+        <form action = '/reworking/' method = 'POST'>
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>choix</th>
+                    <th>operation</th>
+                    <th>proba</th>
+                </tr>
+            </thead>
+            <tbody>
+            {%  for R in possible_reworks_list %}
+                <tr>
+                    <td><input type="radio"> <label for="{{ R }}"></label></td>
+                    <td>{{ R }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </form>
+    <input type = "submit" value = "faire la réparation">
